@@ -1,8 +1,0 @@
-central_error|a:9:{s:5:"title";s:23:"Fatal application error";s:6:"detail";s:527:"Uncaught ErrorException: Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\company\agent\index.php:255) in C:\xampp\htdocs\company\content\nav.php:16
-Stack trace:
-#0 [internal function]: {closure}(2, 'Cannot modify h...', 'C:\\xampp\\htdocs...', 16)
-#1 C:\xampp\htdocs\company\content\nav.php(16): header('Location: ./log...')
-#2 C:\xampp\htdocs\company\agent\index.php(451): include('C:\\xampp\\htdocs...')
-#3 Command line code(1): include('C:\\xampp\\htdocs...')
-#4 {main}
-  thrown";s:8:"category";s:6:"server";s:11:"status_code";i:500;s:4:"time";s:19:"2026-08-04 11:30:21";s:11:"request_uri";s:0:"";s:14:"request_method";s:3:"CLI";s:4:"file";s:39:"C:\xampp\htdocs\company\content\nav.php";s:4:"line";i:16;}
