@@ -3,7 +3,7 @@
  * Global configuration for the Company application.
  *
  * Define environment‑dependent constants here.  During development you can
- * simply change BASE_URL to whatever the local URL is (eg. http://localhost/company)
+ * simply change BASE_URL to whatever the local URL is (eg. http://localhost/vsplogistics)
  * and on the live server set it to the Hostinger domain.  The helper
  * `base_url()` makes it easy to append paths.
  *
@@ -18,12 +18,12 @@ if (!defined('BASE_URL')) {
         $base_url = $proto . '://' . $_SERVER['HTTP_HOST'];
         // append subdirectory for localhost
         if (strpos($base_url, 'localhost') !== false) {
-            $base_url .= '/company';
+            $base_url .= '/vsplogistics';
         }
         define('BASE_URL', $base_url);
     } else {
         // fallback for CLI or when HTTP_HOST unavailable
-        define('BASE_URL', 'http://localhost/company');
+        define('BASE_URL', 'http://localhost/vsplogistics');
     }
     // you can override BASE_URL manually above if you need a fixed value
 }

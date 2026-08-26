@@ -344,14 +344,14 @@ File: `protect/db.php`
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "nmtc135";
+$dbname = "u448438938_vsp";
 ```
 
 ## 🧪 Verify Installation
 
 ### Check Tables Created
 ```sql
-USE nmtc135;
+USE u448438938_vsp;
 SHOW TABLES;
 ```
 
@@ -388,7 +388,7 @@ SELECT
 FROM
     INFORMATION_SCHEMA.KEY_COLUMN_USAGE
 WHERE
-    TABLE_SCHEMA = 'nmtc135'
+    TABLE_SCHEMA = 'u448438938_vsp'
     AND REFERENCED_TABLE_NAME IS NOT NULL;
 ```
 
@@ -411,9 +411,9 @@ WHERE
 ### Error: Table already exists
 ```sql
 -- Drop existing database (⚠️ deletes all data!)
-DROP DATABASE IF EXISTS nmtc135;
-CREATE DATABASE nmtc135;
-USE nmtc135;
+DROP DATABASE IF EXISTS u448438938_vsp;
+CREATE DATABASE u448438938_vsp;
+USE u448438938_vsp;
 -- Then import database_complete.sql
 ```
 
@@ -1525,7 +1525,7 @@ KEY POINT: Branch code is saved based on WHO created it,
 ✅ Position: After gr_number
 ✅ Index: idx_branch_code (for fast filtering)
 ✅ Existing Data: 24 bilties assigned to Branch 102
-✅ Database: nmtc135
+✅ Database: u448438938_vsp
 
 ┌───────────────────────────────────────────────────────────────────┐
 │ MODIFIED FILES                                                    │
@@ -1740,7 +1740,7 @@ Next Steps:
   ✅ Column Added: gr_type (ENUM: 'auto', 'manual')
   ✅ Existing Data Updated: 23 auto, 1 manual
   ✅ Index Created: idx_gr_type
-  ✅ Database: nmtc135
+  ✅ Database: u448438938_vsp
 
 ┌───────────────────────────────────────────────────────────────────┐
 │ 2. GR TYPE IDENTIFICATION                                         │

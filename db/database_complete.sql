@@ -1,7 +1,7 @@
 -- ========================================
 -- BILTY MANAGEMENT SYSTEM - COMPLETE DATABASE
 -- ========================================
--- Database: nmtc135
+-- Database: u448438938_vsp
 -- Version: 1.0
 -- Created: 2026-01-23
 -- 
@@ -30,8 +30,8 @@
 -- ========================================
 
 -- Use database
-CREATE DATABASE IF NOT EXISTS nmtc135;
-USE nmtc135;
+CREATE DATABASE IF NOT EXISTS u448438938_vsp;
+USE u448438938_vsp;
 
 -- ========================================
 -- TABLE 1: COMPANY

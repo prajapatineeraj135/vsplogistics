@@ -26,7 +26,7 @@ $isLocalDatabase = defined('BASE_URL') && strpos(BASE_URL, 'localhost') !== fals
 define('DB_HOST', 'localhost');
 define('DB_USER', $isLocalDatabase ? 'root' : 'u448438938_nmtc');
 define('DB_PASS', $isLocalDatabase ? '' : 'Nmtc@135@135');
-define('DB_NAME', $isLocalDatabase ? 'nmtc135' : 'u448438938_nmtc');
+define('DB_NAME', 'u448438938_vsp');
 define('DB_CHARSET', 'utf8mb4');
 
 $schemaSql = <<<'NMTCSQL'

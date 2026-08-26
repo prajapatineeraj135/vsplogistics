@@ -1,7 +1,7 @@
 <?php
 /**
  * Database Connection
- * Establishes MySQLi connection to nmtc135 database
+ * Establishes MySQLi connection to the VSP database
  */
 
 // load global configuration (defines BASE_URL, helpers, etc.)
@@ -15,13 +15,13 @@ if (strpos(BASE_URL, 'localhost') !== false) {
     $host = "localhost";
     $user = "root";
     $pass = "";
-    $db = "nmtc135";
+    $db = "u448438938_vsp";
 } else {
     // Live/Hostinger
     $host = "localhost";
     $user = "u448438938_nmtc";
     $pass = "Nmtc@135@135";
-    $db = "u448438938_nmtc";
+    $db = "u448438938_vsp";
 }
 
 $conn = new mysqli($host, $user, $pass);
