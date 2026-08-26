@@ -40,10 +40,10 @@ function getNextGRNumber($conn) {
         }
 
         // If none found for this branch or parse failed, start fresh with 1201 for this prefix
-        return $branchPrefix . '/1201'; // Start with 1201 to avoid conflict with old format
+        return $branchPrefix . '/101'; // Start with 1201 to avoid conflict with old format
 
     } catch (Exception $e) {
-        return $branchPrefix . '/1201'; // Default if error
+        return $branchPrefix . '/101'; // Default if error
     }
 }
 
