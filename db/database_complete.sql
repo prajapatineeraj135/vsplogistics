@@ -254,6 +254,7 @@ CREATE TABLE IF NOT EXISTS `biltys` (
   `to_station` varchar(255) NOT NULL COMMENT 'Destination station',
   `challan_id` int(11) DEFAULT NULL COMMENT 'Linked challan record when dispatched',
   `gr_number` varchar(50) DEFAULT NULL COMMENT 'Goods Receipt number',
+  `trans_gr` varchar(100) NOT NULL DEFAULT '' COMMENT 'Manual transporter GR reference',
   `gr_type` ENUM('auto', 'manual') DEFAULT 'auto' COMMENT 'auto=branch/sequence, manual=user-entered',
   `bilty_date` datetime DEFAULT CURRENT_TIMESTAMP,
   

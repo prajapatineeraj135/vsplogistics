@@ -11,6 +11,7 @@ include '../../../protect/db.php';
 include '../includes/util.php';
 
 ensureBiltyItemRateBasisColumn($conn);
+ensureBiltyTransGrColumn($conn);
 
 // Ensure session for company context
 if (session_status() === PHP_SESSION_NONE) {
@@ -85,6 +86,17 @@ function ensureBiltyItemRateBasisColumn($conn) {
 
     if (!$conn->query("ALTER TABLE bilty_items ADD COLUMN rate_basis VARCHAR(20) NOT NULL DEFAULT 'Nag' AFTER weight")) {
         throw new Exception('Could not add bilty_items.rate_basis column: ' . $conn->error);
+    }
+}
+
+function ensureBiltyTransGrColumn($conn) {
+    $check = $conn->query("SHOW COLUMNS FROM biltys LIKE 'trans_gr'");
+    if ($check && $check->num_rows > 0) {
+        return;
+    }
+
+    if (!$conn->query("ALTER TABLE biltys ADD COLUMN trans_gr VARCHAR(100) NOT NULL DEFAULT '' AFTER gr_number")) {
+        throw new Exception('Could not add biltys.trans_gr column: ' . $conn->error);
     }
 }
 

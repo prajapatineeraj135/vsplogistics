@@ -130,9 +130,9 @@ if (isset(($_GET['edit_id']))) {
                         <div class="party-label">Name:</div>
                         <div class="party-name-control">
                             <!-- Search input with autocomplete and dropdown handler -->
-                            <input type="text" id="consignor_name" autocomplete="off" value="<?php echo htmlspecialchars($edit['consignor_name'] ?? 'Self'); ?>"
+                            <input type="text" id="consignor_name" autocomplete="off" value="<?php echo htmlspecialchars($edit['consignor_name'] ?? ''); ?>"
                                 onkeyup="searchParty(this,'Consignor')" onkeydown="handlePartyKey(event,'Consignor')"
-                                required>
+                                required autofocus>
                             <!-- Quick Add Party Button -->
                             <button type="button" class="party-add-btn" tabindex="-1"
                                 onclick="showInfo('Opening Party Create Page'); window.open('../../party/', '_blank');">
@@ -222,6 +222,17 @@ if (isset(($_GET['edit_id']))) {
                         </td>
                     </tr>
 
+                    <!-- Manual transporter GR reference -->
+                    <tr>
+                        <th class="k">Trans GR</th>
+                        <td class="sep">:</td>
+                        <td class="v big">
+                            <input type="text" name="trans_gr" autocomplete="off"
+                                value="<?php echo htmlspecialchars($edit['trans_gr'] ?? ''); ?>"
+                                placeholder="Trans GR" required>
+                        </td>
+                    </tr>
+
                     <!-- Bilty Date -->
                     <tr>
                         <th class="k">Date</th>
@@ -230,7 +241,7 @@ if (isset(($_GET['edit_id']))) {
                             <!-- Date input in DD-MM-YYYY format -->
                             <!-- Auto-focuses on first field on click -->
                             <input type="text" id="currentDateTime" autocomplete="off" placeholder="DD-MM-YYYY" value="<?php echo htmlspecialchars($edit['date'] ?? ''); ?>"    
-                                tabindex="-1" onfocus="selectDateInput(this)">
+                                onfocus="selectDateInput(this)">
                         </td>
                     </tr>
 
@@ -445,9 +456,9 @@ if (isset(($_GET['edit_id']))) {
                     <div class="charges-row">
                         <div class="c-value full">
                             <select name="payment" id="payment">
-                                <option value="Topay" selected>Topay</option>
+                                <option value="TBB" selected>TBB</option>
                                 <option value="Cash">Cash</option>
-                                <option value="TBB">TBB</option>
+                                <option value="Topay">Topay</option>
                             </select>
                         </div>
                     </div>

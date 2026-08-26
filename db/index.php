@@ -62,6 +62,7 @@ CREATE TABLE `bills` (
 CREATE TABLE `biltys` (
   `id` int(11) NOT NULL,
   `gr_number` varchar(50) DEFAULT NULL,
+  `trans_gr` varchar(100) NOT NULL DEFAULT '',
   `company_id` int(11) DEFAULT NULL,
   `bilty_date` datetime DEFAULT current_timestamp(),
   `consignor_id` int(11) DEFAULT 0,

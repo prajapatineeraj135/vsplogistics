@@ -275,6 +275,11 @@ function displayCharge($value, $hideCharges) {
             </td>
           </tr>
           <tr>
+            <th class="k">Trans GR</th>
+            <td class="sep">:</td>
+            <td class="v big"><?= htmlspecialchars((string) ($bilty['trans_gr'] ?? '')) ?></td>
+          </tr>
+          <tr>
             <th class="k">Date</th>
             <td class="sep">:</td>
             <td class="v big"><?= (htmlspecialchars($displayDate)) ?></td>

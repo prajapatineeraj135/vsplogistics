@@ -30,6 +30,7 @@ include '../../../bill/includes/bill_sync.php';
 ob_end_clean();
 
 ensureBiltyItemRateBasisColumn($conn);
+ensureBiltyTransGrColumn($conn);
 
 // Get the action (save or update)
 $action = isset($_POST['action']) ? $_POST['action'] : '';
@@ -54,6 +55,7 @@ if ($action === 'save') {
  */
 function collectBiltyData($conn) {
     $grNumber = sanitizeString($conn, getPostParam('gr_number', 'string'));
+    $transGr = sanitizeString($conn, getPostParam('trans_gr', 'string'));
     
     // Get company ID from session
     if (session_status() === PHP_SESSION_NONE) {
@@ -68,6 +70,7 @@ function collectBiltyData($conn) {
         'consignee_name' => toLowercase(sanitizeString($conn, getPostParam('consignee_name', 'string'))),
         'to_station' => toLowercase(sanitizeString($conn, getPostParam('to_station', 'string'))),
         'gr_number' => toLowercase($grNumber),
+        'trans_gr' => toLowercase($transGr),
         'company_id' => $companyId,
         'invoice_number' => toLowercase(sanitizeString($conn, getPostParam('invoice_number', 'string'))),
         'invoice_value' => sanitizeFloat(getPostParam('invoice_value', 'float')),
@@ -174,6 +177,10 @@ function validateBiltyData($data, $conn, $excludeBiltyId = null) {
     if (empty($data['to_station'])) {
         return ['valid' => false, 'message' => 'Destination station is required'];
     }
+
+    if (empty($data['trans_gr'])) {
+        return ['valid' => false, 'message' => 'Trans GR is required'];
+    }
     
     // Validate GR number if provided
     if (!empty($data['gr_number'])) {
@@ -229,6 +236,17 @@ function ensureBiltyItemRateBasisColumn($conn) {
     }
 }
 
+function ensureBiltyTransGrColumn($conn) {
+    $check = $conn->query("SHOW COLUMNS FROM biltys LIKE 'trans_gr'");
+    if ($check && $check->num_rows > 0) {
+        return;
+    }
+
+    if (!$conn->query("ALTER TABLE biltys ADD COLUMN trans_gr VARCHAR(100) NOT NULL DEFAULT '' AFTER gr_number")) {
+        throw new Exception('Could not add biltys.trans_gr column: ' . $conn->error);
+    }
+}
+
 /**
  * Save a new bilty record to the database
  * 
@@ -259,13 +277,13 @@ function saveBilty($conn) {
         $sql = "
             INSERT INTO biltys (
                 consignor_id, consignor_name, consignee_id, consignee_name, to_station,
-                gr_number, company_id, invoice_number, invoice_value, eway_bill, private_mark, remark,
+                gr_number, trans_gr, company_id, invoice_number, invoice_value, eway_bill, private_mark, remark,
                 delivery_location, freight, hammali, p_freight, brokerage, dd_charge,
                 gr_charge, total_charge, payment_type, bilty_date, total_qty, total_weight,
                 created_at, status
             ) VALUES (
                 {$data['consignor_id']}, '{$data['consignor_name']}', {$data['consignee_id']},
-                '{$data['consignee_name']}', '{$data['to_station']}', '{$data['gr_number']}', '{$data['company_id']}',
+                '{$data['consignee_name']}', '{$data['to_station']}', '{$data['gr_number']}', '{$data['trans_gr']}', '{$data['company_id']}',
                 '{$data['invoice_number']}', {$data['invoice_value']}, '{$data['eway_bill']}',
                 '{$data['private_mark']}', '{$data['remark']}', '{$data['delivery_location']}',
                 {$data['freight']}, {$data['hammali']}, {$data['p_freight']},
@@ -367,6 +385,7 @@ function updateBilty($conn) {
                 consignee_name = '{$data['consignee_name']}',
                 to_station = '{$data['to_station']}',
                 gr_number = '{$data['gr_number']}',
+                trans_gr = '{$data['trans_gr']}',
                 company_id = '{$data['company_id']}',
                 invoice_number = '{$data['invoice_number']}',
                 invoice_value = {$data['invoice_value']},

@@ -47,23 +47,23 @@ function focusConsignorInput() {
     consignorInput.focus();
     consignorInput.select();
 }
+// not set default consignor self
+// function setDefaultConsignor() {
+//     const consignorInput = document.getElementById('consignor_name');
+//     const consignorId = document.getElementById('consignor_id');
 
-function setDefaultConsignor() {
-    const consignorInput = document.getElementById('consignor_name');
-    const consignorId = document.getElementById('consignor_id');
+//     if (!consignorInput || editMode) {
+//         return;
+//     }
 
-    if (!consignorInput || editMode) {
-        return;
-    }
+//     if (!consignorInput.value.trim()) {
+//         consignorInput.value = 'Self';
+//     }
 
-    if (!consignorInput.value.trim()) {
-        consignorInput.value = 'Self';
-    }
-
-    if (consignorId && consignorInput.value.trim().toLowerCase() === 'self') {
-        consignorId.value = '';
-    }
-}
+//     if (consignorId && consignorInput.value.trim().toLowerCase() === 'self') {
+//         consignorId.value = '';
+//     }
+// }
 
 function removePrintIframe() {
     const frame = document.getElementById('bilty_print_iframe');
@@ -319,7 +319,8 @@ function applyManualGREntry(enabled, options = {}) {
         grInput.setAttribute('tabindex', '-1');
         grInput.readOnly = false;
         if (dateInput) {
-            dateInput.setAttribute('tabindex', '-1');
+            // Auto GR is generated, so Date remains in the keyboard flow.
+            dateInput.removeAttribute('tabindex');
         }
         if (shouldFetchAutoGR && !editMode) {
             getNextGRNumber();
@@ -353,6 +354,11 @@ function initializeManualGRToggle() {
     if (dateInput) {
         dateInput.addEventListener('keydown', handleManualDateKey);
     }
+
+    const transGrInput = document.querySelector('input[name="trans_gr"]');
+    if (transGrInput) {
+        transGrInput.addEventListener('keydown', handleTransGrKey);
+    }
 }
 
 function focusFirstItemQuantity() {
@@ -369,6 +375,19 @@ function handleManualGRKey(event) {
     }
 
     event.preventDefault();
+    const transGrInput = document.querySelector('input[name="trans_gr"]');
+    if (transGrInput) {
+        transGrInput.focus();
+        transGrInput.select();
+    }
+}
+
+function handleTransGrKey(event) {
+    if (event.key !== 'Enter') {
+        return;
+    }
+
+    event.preventDefault();
     const dateInput = document.getElementById('currentDateTime');
     if (dateInput) {
         selectDateInput(dateInput);
@@ -376,7 +395,7 @@ function handleManualGRKey(event) {
 }
 
 function handleManualDateKey(event) {
-    if (!isManualGREntryEnabled() || event.key !== 'Enter') {
+    if (event.key !== 'Enter') {
         return;
     }
 
@@ -384,11 +403,6 @@ function handleManualDateKey(event) {
     validateAndFormatDateTime();
 
     const stationInput = document.getElementById('to_station');
-    if (stationInput && stationInput.value.trim() && stationInput.getAttribute('tabindex') === '-1') {
-        focusFirstItemQuantity();
-        return;
-    }
-
     if (stationInput) {
         stationInput.focus();
         stationInput.select();
@@ -788,10 +802,10 @@ function focusNextAfterPartySelection(partyType) {
         }
     }
 
-    const stationInput = document.getElementById('to_station');
-    if (stationInput && stationInput.getAttribute('tabindex') !== '-1') {
-        stationInput.focus();
-        stationInput.select();
+    const transGrInput = document.querySelector('input[name="trans_gr"]');
+    if (transGrInput) {
+        transGrInput.focus();
+        transGrInput.select();
         return;
     }
 
@@ -1728,6 +1742,7 @@ function collectBiltyData() {
         consignee_name: document.getElementById('consignee_name').value,
         to_station: document.getElementById('to_station').value,
         gr_number: document.querySelector('input[name="gr_number"]').value,
+        trans_gr: document.querySelector('input[name="trans_gr"]').value.trim(),
         invoice_number: document.querySelector('input[name="invoice_number"]')?.value || '',
         invoice_value: document.querySelector('input[name="invoice_value"]')?.value || 0,
         eway_bill: document.querySelector('input[name="eway_bill"]')?.value || '',
@@ -1768,6 +1783,7 @@ function clearBiltyForm() {
     document.getElementById('to_station').value = '';
     setStationTabSkip(false);
     document.querySelector('input[name="gr_number"]').value = '';
+    document.querySelector('input[name="trans_gr"]').value = '';
     document.querySelector('input[name="invoice_number"]').value = '';
     document.querySelector('input[name="invoice_value"]').value = '';
     document.querySelector('input[name="eway_bill"]').value = '';
@@ -1775,7 +1791,7 @@ function clearBiltyForm() {
     document.querySelector('input[name="remark"]').value = '';
     
     // Reset payment to default
-    document.getElementById('payment').value = 'Topay';
+    document.getElementById('payment').value = 'TBB';
     
     // Clear all charge inputs
     document.querySelectorAll('.charge-input').forEach(input => {
@@ -1833,6 +1849,7 @@ function validateBiltyFields() {
     const consignorName = document.getElementById('consignor_name');
     const consigneeName = document.getElementById('consignee_name');
     const toStation = document.getElementById('to_station');
+    const transGr = document.querySelector('input[name="trans_gr"]');
     const currentDateTime = document.getElementById('currentDateTime');
     const itemContainer = document.getElementById('itemContainer');
     const items = itemContainer.querySelectorAll('.item-row');
@@ -1872,6 +1889,14 @@ function validateBiltyFields() {
     if (!toStation.value.trim()) {
         showWarning('Destination station is required!');
         toStation.focus();
+        return false;
+    }
+
+    if (!transGr || !transGr.value.trim()) {
+        showWarning('Trans GR is required!');
+        if (transGr) {
+            transGr.focus();
+        }
         return false;
     }
     
@@ -2123,6 +2148,7 @@ function populateFormWithBiltyData(bilty, items) {
     setVal('#to_station', bilty.to_station);
     setStationTabSkip(false);
     setVal('input[name="gr_number"]', bilty.gr_number);
+    setVal('input[name="trans_gr"]', bilty.trans_gr);
     const grInput = document.querySelector('input[name="gr_number"]');
     if (grInput) {
         grInput.readOnly = true;
@@ -2279,6 +2305,10 @@ function initializePage() {
         if (saveBtn) saveBtn.style.display = 'inline-block';
         if (updateBtn) updateBtn.style.display = 'none';
         if (cancelBtn) cancelBtn.style.display = 'none';
+        const paymentSelect = document.getElementById('payment');
+        if (paymentSelect) {
+            paymentSelect.value = 'TBB';
+        }
         setDefaultConsignor();
     }
 
@@ -2296,3 +2326,8 @@ function initializePage() {
 
 // Safety: initialize on DOM ready in case inline hook is missing
 document.addEventListener('DOMContentLoaded', initializePage);
+
+// Restore the entry point after a browser reload or back/forward navigation.
+window.addEventListener('pageshow', () => {
+    setTimeout(focusConsignorInput, 0);
+});
