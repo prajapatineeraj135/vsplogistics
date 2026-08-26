@@ -24,8 +24,8 @@ function isLocalhost(): bool {
 }
 
 // if running locally, preload these values for easier testing
-$default_username = isLocalhost() ? 'QUJX826' : '';
-$default_password = isLocalhost() ? '408979' : '';
+$default_username = isLocalhost() ? 'YFOF192' : '';
+$default_password = isLocalhost() ? '851009' : '';
 
 /* -------------------------
    RUN LOGIN ONLY ON SUBMIT
