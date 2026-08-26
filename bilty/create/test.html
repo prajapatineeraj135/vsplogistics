@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilty Module - Function Test</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; margin-bottom: 30px; text-align: center; }
+        .test-section { margin-bottom: 30px; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        .test-section h2 { color: #555; margin-bottom: 15px; font-size: 18px; }
+        .test-result { padding: 10px; margin: 10px 0; border-radius: 4px; font-family: monospace; font-size: 14px; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .pending { background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        .info { background: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Bilty Module - Function Test Suite</h1>
+        
+        <div class="info">
+            <strong>Test Coverage:</strong> API Endpoints, Asset Loading, Form Functionality
+        </div>
+
+        <!-- Test 1: Asset Loading -->
+        <div class="test-section">
+            <h2>1️⃣ Asset Files (CSS & JS)</h2>
+            <button onclick="testAssets()">Run Test</button>
+            <div id="asset-result"></div>
+        </div>
+
+        <!-- Test 2: API Endpoints -->
+        <div class="test-section">
+            <h2>2️⃣ API Endpoints</h2>
+            <button onclick="testAPIs()">Run Test</button>
+            <div id="api-result"></div>
+        </div>
+
+        <!-- Test 3: GR Number -->
+        <div class="test-section">
+            <h2>3️⃣ GR Number Generation</h2>
+            <button onclick="testGR()">Run Test</button>
+            <div id="gr-result"></div>
+        </div>
+
+        <!-- Test 4: Search Functions -->
+        <div class="test-section">
+            <h2>4️⃣ Search Functions</h2>
+            <button onclick="testSearch()">Run Test</button>
+            <div id="search-result"></div>
+        </div>
+
+        <!-- Test 5: Form Navigation -->
+        <div class="test-section">
+            <h2>5️⃣ Form Navigation</h2>
+            <button onclick="testNavigation()">Run Test</button>
+            <div id="nav-result"></div>
+        </div>
+
+        <!-- Run All Tests -->
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="runAllTests()" style="background: #28a745; padding: 15px 40px; font-size: 16px;">
+                ▶️ Run All Tests
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function log(containerId, message, type = 'pending') {
+            const container = document.getElementById(containerId);
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.textContent = message;
+            container.appendChild(div);
+        }
+
+        function clear(containerId) {
+            document.getElementById(containerId).innerHTML = '';
+        }
+
+        async function testAssets() {
+            clear('asset-result');
+            log('asset-result', 'Testing asset files...', 'pending');
+
+            const assets = [
+                { url: 'assets/css/style.css', name: 'Main Stylesheet' },
+                { url: 'assets/css/notification.css', name: 'Notification CSS' },
+                { url: 'assets/js/bilty.js', name: 'Main JavaScript' },
+                { url: 'assets/js/notification.js', name: 'Notification JS' }
+            ];
+
+            for (const asset of assets) {
+                try {
+                    const response = await fetch(asset.url, { method: 'HEAD' });
+                    if (response.ok) {
+                        log('asset-result', `✅ ${asset.name}: OK (${response.status})`, 'success');
+                    } else {
+                        log('asset-result', `❌ ${asset.name}: NOT FOUND (${response.status})`, 'error');
+                    }
+                } catch (e) {
+                    log('asset-result', `❌ ${asset.name}: ERROR - ${e.message}`, 'error');
+                }
+            }
+        }
+
+        async function testAPIs() {
+            clear('api-result');
+            log('api-result', 'Testing API endpoints...', 'pending');
+
+            const apis = [
+                { url: 'api/get_gr.php?action=getNextGR', name: 'Get Next GR' },
+                { url: 'api/search_party.php?ajax=party_search&type=Consignor&q=test', name: 'Party Search' },
+                { url: 'api/station_search.php?ajax=station_search&q=test', name: 'Station Search' },
+                { url: 'api/product_search.php?ajax=product_search&q=test', name: 'Product Search' }
+            ];
+
+            for (const api of apis) {
+                try {
+                    const response = await fetch(api.url);
+                    if (response.ok) {
+                        const data = await response.json();
+                        log('api-result', `✅ ${api.name}: Working`, 'success');
+                    } else {
+                        log('api-result', `⚠️ ${api.name}: Response ${response.status}`, 'error');
+                    }
+                } catch (e) {
+                    log('api-result', `❌ ${api.name}: ${e.message}`, 'error');
+                }
+            }
+        }
+
+        async function testGR() {
+            clear('gr-result');
+            log('gr-result', 'Testing GR number generation...', 'pending');
+
+            try {
+                const response = await fetch('api/get_gr.php?action=getNextGR');
+                const data = await response.json();
+                
+                if (data.success && data.gr_number) {
+                    log('gr-result', `✅ GR Generated: ${data.gr_number}`, 'success');
+                    
+                    // Test uniqueness check
+                    const checkResponse = await fetch(`api/get_gr.php?action=checkGR&gr=${encodeURIComponent(data.gr_number)}`);
+                    const checkData = await checkResponse.json();
+                    
+                    if (checkData.success) {
+                        log('gr-result', `✅ GR Uniqueness Check: Working (is_unique: ${checkData.is_unique})`, 'success');
+                    } else {
+                        log('gr-result', `⚠️ GR Check: ${checkData.message}`, 'error');
+                    }
+                } else {
+                    log('gr-result', `❌ Failed: ${data.message || 'Unknown error'}`, 'error');
+                }
+            } catch (e) {
+                log('gr-result', `❌ Error: ${e.message}`, 'error');
+            }
+        }
+
+        async function testSearch() {
+            clear('search-result');
+            log('search-result', 'Testing search functions...', 'pending');
+
+            const searches = [
+                { url: 'api/search_party.php?ajax=party_search&type=Consignor&q=a', name: 'Consignor Search' },
+                { url: 'api/search_party.php?ajax=party_search&type=Consignee&q=a', name: 'Consignee Search' },
+                { url: 'api/station_search.php?ajax=station_search&q=a', name: 'Station Search' },
+                { url: 'api/product_search.php?ajax=product_search&q=a', name: 'Product Search' }
+            ];
+
+            for (const search of searches) {
+                try {
+                    const response = await fetch(search.url);
+                    const data = await response.json();
+                    
+                    if (Array.isArray(data)) {
+                        log('search-result', `✅ ${search.name}: ${data.length} results found`, 'success');
+                    } else {
+                        log('search-result', `⚠️ ${search.name}: Unexpected response format`, 'error');
+                    }
+                } catch (e) {
+                    log('search-result', `❌ ${search.name}: ${e.message}`, 'error');
+                }
+            }
+        }
+
+        async function testNavigation() {
+            clear('nav-result');
+            log('nav-result', 'Testing page navigation...', 'pending');
+
+            try {
+                // Test main page
+                const mainResponse = await fetch('index.php', { method: 'HEAD' });
+                if (mainResponse.ok) {
+                    log('nav-result', '✅ Main Page (Create Mode): Accessible', 'success');
+                } else {
+                    log('nav-result', '❌ Main Page: Not Accessible', 'error');
+                }
+
+                // Test edit mode (will fail auth but endpoint should exist)
+                const editResponse = await fetch('index.php?edit_id=1', { method: 'HEAD' });
+                if (editResponse.ok) {
+                    log('nav-result', '✅ Edit Mode URL: Accessible', 'success');
+                } else {
+                    log('nav-result', '⚠️ Edit Mode: Requires authentication', 'pending');
+                }
+            } catch (e) {
+                log('nav-result', `❌ Navigation Error: ${e.message}`, 'error');
+            }
+        }
+
+        async function runAllTests() {
+            await testAssets();
+            await new Promise(r => setTimeout(r, 500));
+            await testAPIs();
+            await new Promise(r => setTimeout(r, 500));
+            await testGR();
+            await new Promise(r => setTimeout(r, 500));
+            await testSearch();
+            await new Promise(r => setTimeout(r, 500));
+            await testNavigation();
+        }
+    </script>
+</body>
+</html>

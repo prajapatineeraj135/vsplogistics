@@ -1,0 +1,306 @@
+.challan,
+.challan * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+.challan{
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+}
+/* =============================
+   Challan Header Styles
+============================= */
+.challan-head {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+}
+
+.challan table {
+    width: 100%;
+    font-size: 16px;
+    border-collapse: collapse;
+    border: 1px solid #000000;
+    background: #ffffff;
+}
+
+.challan th,
+.challan td {
+    border: 1px solid #000000;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.challan th {
+    padding: 2px;
+    background: #f5f5f5;
+}
+
+.challan label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.challan input {
+    width: 100%;
+    padding: 2px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 0;
+    background: #ffffff;
+    color: #000000;
+    font-size: 14px;
+}
+
+#challan-station,
+#challan-vehicle {
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.challan input:focus {
+    background-color: #fffcea;
+    border-color: #000000;
+    outline: none;
+}
+
+.challan input[tabindex="-1"] {
+    background: #f8f8f8;
+}
+
+.suggest-box {
+    position: relative;
+}
+
+.suggest-box input {
+    border: 1px solid #000000;
+    font-weight: 400;
+    letter-spacing: 0;
+}
+
+.suggest-box input:focus {
+    background-color: #e1fa61;
+    border-color: #000000;
+    box-shadow: none;
+}
+
+.suggest-list {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 4px 0;
+    list-style: none;
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 0;
+    box-shadow: none;
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 5;
+    display: none;
+}
+
+.suggest-list.show {
+    display: block;
+}
+
+.suggest-list li {
+    padding: 6px 8px;
+    font-size: 14px;
+    color: #000000;
+    cursor: pointer;
+}
+
+.suggest-list li:hover {
+    background: #eaf3ff;
+}
+
+.suggest-list li.active {
+    color: #000000;
+    font-weight: 700;
+    background: #e1fa61;
+}
+
+.suggest-list .empty {
+    color: #666666;
+    cursor: default;
+}
+
+.suggest-list .empty:hover {
+    color: #1f2937;
+    background: transparent;
+}
+
+.suggest-list .create-item {
+    padding: 6px 8px;
+    border-top: 1px solid #e5e5e5;
+    background: #ffffff;
+}
+
+.suggest-list .create-btn {
+    width: 100%;
+    border: 1px solid #000000;
+    background: #e1fa61;
+    color: #000000;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 5px 8px;
+    cursor: pointer;
+}
+
+.suggest-list .create-btn:hover {
+    background: #d5ef4f;
+}
+
+.challan-no-wrap {
+    display: grid;
+    grid-template-columns: 1fr 0.7fr;
+}
+
+.challan-mode {
+    width: 100%;
+    padding: 2px 3px;
+    border-radius: 0;
+    background: #ffffff;
+    color: #000000;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+#challan-no[readonly] {
+    background: #7fecff;
+    font-weight: 700;
+}
+
+/* =============================
+   Bilty Table Styles
+============================= */
+.bilty-body td {
+    text-transform: capitalize !important;
+    padding: 0px 6px !important;
+}
+
+#select-all-booked,
+#select-all-dispatch,
+.booked-bilty-checkbox,
+.dispatch-bilty-checkbox {
+    transition: transform 0.15s ease;
+    transform-origin: center;
+}
+
+#select-all-booked:focus,
+#select-all-dispatch:focus,
+.booked-bilty-checkbox:focus,
+.dispatch-bilty-checkbox:focus {
+    transform: scale(1.2);
+    accent-color: red;
+}
+
+.bilty {
+    margin-top: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.scrollable {
+   height: 420px;
+   overflow-y: auto;
+}
+
+.bilty-body {
+    height: 300px;
+}
+
+.challan tfoot th {
+    position: sticky;
+    z-index: 2;
+    bottom: 0;
+    background: #86b5ff;
+}
+
+
+
+/* =============================
+   Action Button Styles
+============================= */
+.button-area {
+    background-color: grey;
+    padding: 5px;
+    margin-top: 5px; 
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.challan .btn {
+    border: 2px solid black;
+    padding: 5px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: black;
+    border-radius: 5px;
+}
+
+.dispatch {
+    width: 150px;
+    margin-top: 10px;
+    background-color: lightgreen;
+}
+
+.remove {
+    width: 150px;
+    margin-top: 10px;
+    background-color: lightcoral;
+}
+
+.dispatch-title {
+    position: relative;
+}
+
+.dispatch-title .remove-self {
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 4px 8px;
+    font-size: 12px;
+    line-height: 1.2;
+    background-color: lightcoral;
+}
+
+.save {
+    background-color: #4CAF50;
+}
+
+.print {
+    background-color: #2196F3;
+}
+
+.update {
+    background-color: #FFC107;
+}
+
+.delete {
+    background-color: #F44336;
+}
+
+.challan .btn:focus,
+.challan .btn:hover {
+    background-color: white;
+   
+}
+
+.challan button {
+    padding: 8px 30px;
+    cursor: pointer;
+}

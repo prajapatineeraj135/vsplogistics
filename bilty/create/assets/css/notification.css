@@ -1,0 +1,176 @@
+/**
+ * Professional Notification Styles
+ * Modern toast notifications with smooth animations
+ */
+
+/* Notification Container - Fixed position on right side */
+.notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: none;
+    max-width: 400px;
+}
+
+/* Base Notification Style */
+.notification {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    min-width: 320px;
+    max-width: 400px;
+    opacity: 0;
+    transform: translateX(380px) scale(0.98);
+    transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+                opacity 0.3s ease;
+    pointer-events: all;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Show animation */
+.notification-show {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+/* Hide animation */
+.notification-hide {
+    opacity: 0;
+    transform: translateX(420px) scale(0.98);
+}
+
+/* Notification Icon */
+.notification-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 4px;
+}
+
+.notification-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Notification Content */
+.notification-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-message {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #1f2937;
+    word-wrap: break-word;
+    font-weight: 500;
+}
+
+/* Close Button */
+.notification-close {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    font-size: 24px;
+    line-height: 20px;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+    margin-left: 8px;
+}
+
+.notification-close:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #1f2937;
+}
+
+/* Success Notification (Green) */
+.notification-success {
+    border-left: 4px solid #10b981;
+    background: linear-gradient(135deg, rgba(236, 253, 245, 0.96) 0%, rgba(255, 255, 255, 0.94) 100%);
+}
+
+.notification-success .notification-icon {
+    background: #d1fae5;
+    color: #059669;
+}
+
+/* Error Notification (Red) */
+.notification-error {
+    border-left: 4px solid #ef4444;
+    background: linear-gradient(135deg, rgba(254, 242, 242, 0.96) 0%, rgba(255, 255, 255, 0.94) 100%);
+}
+
+.notification-error .notification-icon {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+/* Warning Notification (Orange) */
+.notification-warning {
+    border-left: 4px solid #f59e0b;
+    background: linear-gradient(135deg, rgba(255, 251, 235, 0.96) 0%, rgba(255, 255, 255, 0.94) 100%);
+}
+
+.notification-warning .notification-icon {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+/* Info Notification (Blue) */
+.notification-info {
+    border-left: 4px solid #3b82f6;
+    background: linear-gradient(135deg, rgba(239, 246, 255, 0.96) 0%, rgba(255, 255, 255, 0.94) 100%);
+}
+
+.notification-info .notification-icon {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .notification-container {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    .notification {
+        min-width: auto;
+        max-width: none;
+    }
+}
+
+/* Animation for stacked notifications */
+.notification:not(:last-child) {
+    margin-bottom: 0;
+}
+
+/* Hover effect */
+.notification:hover {
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}

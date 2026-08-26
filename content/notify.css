@@ -1,0 +1,294 @@
+/*!
+ * notify.css – Centralized Toast & Confirm-Modal Styles
+ * Loaded globally via content/nav.php
+ */
+
+/* ============================================================
+   TOAST CONTAINER
+   ============================================================ */
+#nm-toast-ct {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+    max-width: 380px;
+}
+
+/* ── Toast base ── */
+.nm-toast {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 13px 16px;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .15), 0 0 0 1px rgba(0, 0, 0, .05);
+    opacity: 0;
+    transform: translateX(110%) scale(.96);
+    transition: transform .32s cubic-bezier(.25, .8, .25, 1), opacity .28s ease;
+    pointer-events: all;
+    background: #ffffff;
+    min-width: 280px;
+    max-width: 380px;
+    font-size: 13px;
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+
+.nm-toast-show {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+.nm-toast-out {
+    opacity: 0;
+    transform: translateX(115%) scale(.96);
+    transition: transform .35s ease, opacity .3s ease;
+}
+
+/* Hover lift */
+.nm-toast:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, .2);
+    transform: translateY(-2px);
+}
+
+/* ── Toast type colours ── */
+.nm-toast-success {
+    border-left: 4px solid #10b981;
+    background: linear-gradient(135deg, rgba(236, 253, 245, .97) 0%, #ffffff 65%);
+}
+
+.nm-toast-error {
+    border-left: 4px solid #ef4444;
+    background: linear-gradient(135deg, rgba(254, 242, 242, .97) 0%, #ffffff 65%);
+}
+
+.nm-toast-failed {
+    border-left: 4px solid #7c3aed;
+    background: linear-gradient(135deg, rgba(245, 243, 255, .97) 0%, #ffffff 65%);
+}
+
+.nm-toast-warning {
+    border-left: 4px solid #f59e0b;
+    background: linear-gradient(135deg, rgba(255, 251, 235, .97) 0%, #ffffff 65%);
+}
+
+.nm-toast-info {
+    border-left: 4px solid #3b82f6;
+    background: linear-gradient(135deg, rgba(239, 246, 255, .97) 0%, #ffffff 65%);
+}
+
+/* ── Action-specific solid-background toasts ── */
+.nm-toast-delete {
+    background: #ef4444;
+    border-left: 4px solid #b91c1c;
+    box-shadow: 0 8px 24px rgba(239, 68, 68, .35), 0 0 0 1px rgba(239, 68, 68, .15);
+}
+
+.nm-toast-save {
+    background: #10b981;
+    border-left: 4px solid #047857;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, .35), 0 0 0 1px rgba(16, 185, 129, .15);
+}
+
+.nm-toast-update {
+    background: #f59e0b;
+    border-left: 4px solid #b45309;
+    box-shadow: 0 8px 24px rgba(245, 158, 11, .35), 0 0 0 1px rgba(245, 158, 11, .15);
+}
+
+.nm-toast-delete .nm-toast-msg,
+.nm-toast-save   .nm-toast-msg,
+.nm-toast-update .nm-toast-msg { color: #ffffff; font-weight: 500; }
+
+.nm-toast-delete .nm-toast-x,
+.nm-toast-save   .nm-toast-x,
+.nm-toast-update .nm-toast-x { color: rgba(255,255,255,.75); }
+
+.nm-toast-delete .nm-toast-x:hover,
+.nm-toast-save   .nm-toast-x:hover,
+.nm-toast-update .nm-toast-x:hover { color: #ffffff; }
+
+.nm-toast-delete .nm-toast-icon { background: rgba(0,0,0,.15); color: #ffffff; }
+.nm-toast-save   .nm-toast-icon { background: rgba(0,0,0,.15); color: #ffffff; }
+.nm-toast-update .nm-toast-icon { background: rgba(0,0,0,.15); color: #ffffff; }
+
+/* ── Toast icon ── */
+.nm-toast-icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 3px;
+}
+
+.nm-toast-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.nm-toast-success .nm-toast-icon { background: #d1fae5; color: #059669; }
+.nm-toast-error   .nm-toast-icon { background: #fee2e2; color: #dc2626; }
+.nm-toast-failed  .nm-toast-icon { background: #ede9fe; color: #6d28d9; }
+.nm-toast-warning .nm-toast-icon { background: #fef3c7; color: #d97706; }
+.nm-toast-info    .nm-toast-icon { background: #dbeafe; color: #2563eb; }
+
+/* ── Toast message ── */
+.nm-toast-msg {
+    flex: 1;
+    font-weight: 400;
+    color: #1f2937;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+/* ── Toast close button ── */
+.nm-toast-x {
+    flex-shrink: 0;
+    border: none;
+    background: transparent;
+    color: #9ca3af;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 2px;
+    transition: color .15s;
+    margin-left: 4px;
+    margin-top: -1px;
+}
+
+.nm-toast-x:hover { color: #374151; }
+
+/* ============================================================
+   CONFIRM MODAL
+   ============================================================ */
+#nm-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    align-items: center;
+    justify-content: center;
+}
+
+#nm-modal.nm-modal-show {
+    display: flex;
+}
+
+/* Dark overlay */
+#nm-modal-bg {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .46);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+/* Modal card */
+#nm-modal-box {
+    position: relative;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 28px 28px 22px;
+    max-width: 380px;
+    width: 92%;
+    box-shadow: 0 20px 55px rgba(0, 0, 0, .22);
+    text-align: center;
+    animation: nm-pop .24s cubic-bezier(.25, .8, .25, 1) both;
+}
+
+@keyframes nm-pop {
+    from { opacity: 0; transform: scale(.88) translateY(12px); }
+    to   { opacity: 1; transform: scale(1)   translateY(0); }
+}
+
+/* Warning icon circle */
+#nm-modal-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: #fef3c7;
+    color: #d97706;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    padding: 13px;
+}
+
+#nm-modal-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Message text */
+#nm-modal-msg {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 22px;
+    line-height: 1.4;
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+
+/* Button row */
+#nm-modal-btns {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+#nm-modal-ok {
+    background: #ef4444;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 24px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
+    font-family: inherit;
+}
+
+#nm-modal-ok:hover  { background: #dc2626; }
+#nm-modal-ok:active { transform: scale(.97); }
+
+#nm-modal-no {
+    background: #f3f4f6;
+    color: #374151;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 24px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
+    font-family: inherit;
+}
+
+#nm-modal-no:hover  { background: #e5e7eb; }
+#nm-modal-no:active { transform: scale(.97); }
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+    #nm-toast-ct {
+        left: 10px;
+        right: 10px;
+        max-width: none;
+    }
+
+    .nm-toast {
+        min-width: auto;
+        max-width: none;
+    }
+
+    #nm-modal-box {
+        padding: 22px 18px 18px;
+    }
+}

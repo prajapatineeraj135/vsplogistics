@@ -1,0 +1,215 @@
+/* Mobile-only overrides for bilty create form */
+html,
+body {
+  overflow-x: hidden;
+}
+
+html {
+  font-size: 13px;
+}
+
+.bilty {
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  padding: 6px;
+}
+
+.headingdata {
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+.customer-horizontal {
+  flex-direction: column;
+  gap: 6px;
+}
+
+.consignor,
+.consignee {
+  padding: 4px;
+}
+
+.party-grid {
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 4px;
+}
+
+.party-label,
+.party-value,
+.party-name-control input[type="text"] {
+  font-size: 12px;
+}
+
+.party-name-control {
+  grid-template-columns: minmax(0, 1fr) 28px;
+}
+
+.party-add-btn {
+  width: 28px;
+  height: 28px;
+  font-size: 18px;
+}
+
+.vertical-separator {
+  display: none;
+}
+
+.row {
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.row strong {
+  min-width: 64px;
+  font-size: 12px;
+}
+
+.float-box {
+  right: auto;
+  max-width: 100%;
+  font-size: 12px;
+}
+
+.details {
+  padding: 5px;
+}
+
+.details table,
+.details th.k,
+.details td.v,
+.details td.v.big {
+  font-size: 12px;
+}
+
+.bilty-image-row {
+  grid-template-columns: 1fr;
+  gap: 6px;
+  border-top: 0;
+}
+
+.middle-area,
+.charges-area {
+  border: 1px solid #000;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+:root {
+  --col-no: 42px;
+  --col-desc: minmax(120px, 1fr);
+  --col-basis: 88px;
+  --col-rate: 64px;
+  --col-weight: 70px;
+  --col-btn: 40px;
+}
+
+.heads,
+.item-row,
+.desc-footer {
+  min-width: 0;
+  width: 100%;
+}
+
+.desc-area,
+.heads {
+  overflow-x: hidden;
+}
+
+.desc-content {
+  min-height: 120px;
+  padding: 4px 0 0;
+}
+
+.heads .head,
+.item-row > div,
+.desc-footer > div {
+  font-size: 12px;
+  padding: 3px 2px;
+}
+
+.item-row .btn {
+  justify-content: center;
+  align-items: center;
+}
+
+.item-row .btn button,
+.item-row .btn .add-item-btn,
+.item-row .btn .remove-item-btn {
+  width: 100%;
+  height: 30px;
+  min-width: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.bill-footer,
+.mark-footer {
+  grid-template-columns: 1fr;
+  gap: 4px;
+}
+
+.bill-footer p,
+.mark-footer p {
+  grid-template-columns: 86px minmax(0, 1fr);
+}
+
+.bill-footer input[type="text"],
+.mark-footer input[type="text"],
+.mark-footer select,
+.item-row input[type="text"],
+.details input[type="text"],
+.charges-area input[type="text"],
+input,
+select {
+  width: 100%;
+  font-size: 13px;
+  padding: 3px 4px;
+}
+
+.bilty-btn {
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  padding: 6px;
+}
+
+.bilty-btn .btn {
+  width: 48%;
+  min-width: 118px;
+  text-align: center;
+  font-size: 12px;
+  padding: 5px 8px;
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 12px;
+  }
+
+  .bilty {
+    padding: 4px;
+  }
+
+  .row strong {
+    min-width: 58px;
+  }
+
+  .bilty-btn .btn {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .heads,
+  .item-row,
+  .desc-footer {
+    min-width: 520px;
+  }
+
+  .desc-area,
+  .heads {
+    overflow-x: auto;
+  }
+}

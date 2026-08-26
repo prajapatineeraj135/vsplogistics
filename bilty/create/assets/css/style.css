@@ -1,0 +1,735 @@
+/* ---------- base reset ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+
+
+
+.bilty {
+  padding: 5px;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+}
+
+/* ---------- header ---------- */
+.header {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  text-align: left;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+  border-bottom: 2px solid #000;
+}
+
+.header h1 {
+  letter-spacing: 2px;
+  font-size: 40px;
+  margin-bottom: 4px;
+  ;
+}
+
+.header p {
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.company-branch-details p {
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* ---------- consignor/consignee area ---------- */
+.headingdata {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  align-items: start;
+}
+
+.customer-horizontal {
+  display: flex;
+  gap: 5px;
+  border: 1px solid #000;
+  min-height: 130px;
+}
+
+hr {
+  border: 1.5px solid #000;
+}
+
+.consignor,
+.consignee {
+  flex: 1;
+  padding: 6px;
+  min-width: 0;
+}
+
+.party-grid {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 5px 6px;
+  align-items: center;
+  padding-top: 6px;
+}
+
+.party-label {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.party-name-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 30px;
+  gap: 5px;
+  min-width: 0;
+}
+
+.party-name-control input[type="text"] {
+  width: 100%;
+  min-width: 0;
+  height: 30px;
+  font-size: 15px;
+}
+
+.party-add-btn {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.party-add-btn:hover {
+  background: #f2f2f2;
+}
+
+.party-value {
+  min-height: 20px;
+  font-size: 15px;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.customer-details p {
+  display: flex;
+  margin-bottom: 2px;
+}
+
+.customer-details p strong {
+  width: 75px;
+  display: inline-block;
+
+}
+
+.float-box {
+  position: fixed;
+  top: auto;
+  left: auto;
+  min-width: 180px;
+  width: auto;
+  max-width: min(420px, calc(100vw - 16px));
+  max-height: 200px;
+  overflow: auto;
+  background: #fff;
+  border: 1px solid #000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .2);
+  z-index: 9999;
+  display: none;
+}
+
+.float-item {
+  padding: 6px;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+
+.float-item:hover {
+  background: #f2f2f2;
+}
+
+.float-item.active {
+  background: #cce5ff;
+  font-weight: bold;
+}
+
+.product_float {
+  min-width: 200px;
+  max-width: 350px;
+}
+
+.product_float .float-item {
+  background: #fff;
+  border-left: 4px solid transparent;
+}
+
+.product_float .float-item:hover {
+  background: #f2f2f2;
+}
+
+.product_float .float-item.active {
+  background: #cce5ff;
+  font-weight: bold;
+}
+
+.product_float .float-item--general {
+  background: #ffffff;
+  border-left-color: #6b7280;
+}
+
+.product_float .float-item--saved {
+  background: #e8f5e9;
+  border-left-color: #2e7d32;
+  font-weight: 600;
+}
+
+.product_float .float-item--consignor {
+  background: #fff3cd;
+  border-left-color: #d99a00;
+  font-weight: 600;
+}
+
+.product_float .float-item--consignee {
+  background: #e7f0ff;
+  border-left-color: #2f6fd6;
+  font-weight: 600;
+}
+
+.product_float .float-item--general:hover {
+  background: #f2f2f2;
+}
+
+.product_float .float-item--saved:hover {
+  background: #d9edda;
+}
+
+.product_float .float-item--consignor:hover {
+  background: #ffe7a3;
+}
+
+.product_float .float-item--consignee:hover {
+  background: #d8e7ff;
+}
+
+.product_float .float-item--general.active,
+.product_float .float-item--saved.active,
+.product_float .float-item--consignor.active,
+.product_float .float-item--consignee.active {
+  background: #cce5ff;
+  font-weight: bold;
+}
+
+/* Empty dropdown state with quick action when no product is found. */
+.product_float .product-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px;
+  min-width: 220px;
+}
+
+.product_float .product-empty-text {
+  font-size: 12px;
+  color: #444;
+}
+
+.product_float .product-add-btn {
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  font-size: 12px;
+  padding: 3px 8px;
+  cursor: pointer;
+}
+
+.product_float .product-add-btn:hover {
+  background: #f2f2f2;
+}
+
+
+/* ---------- details box ---------- */
+.details {
+  padding: 3px;
+  border: 1px solid #000;
+  height: 100%;
+}
+
+
+.details table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  height: 100%;
+}
+
+
+.details th.k {
+  text-align: left;
+  font-weight: 700;
+  padding-left: 3px;
+  width: 30%;
+  font-size: 14px;
+}
+
+.details td.sep {
+  width: 5%;
+  text-align: center;
+  padding: 6px 4px;
+}
+
+.details td.v {
+  text-align: left;
+  padding: 2px 0px;
+  font-weight: 600;
+  width: 90%;
+  font-size: 15px;
+  ;
+}
+
+.details input[type="text"] {
+  width: 100%;
+  min-width: 0;
+}
+
+#to_station {
+  width: 100%;
+}
+
+.gr-entry-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gr-entry-control input[name="gr_number"] {
+  min-width: 0;
+  flex: 1;
+}
+
+.manual-gr-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.manual-gr-toggle input {
+  width: 14px;
+  height: 14px;
+}
+
+.manual-gr-toggle span {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.details td.v.big {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0a0a0a;
+  letter-spacing: 2px;
+
+}
+
+.auto label {
+  font-size: 10px;
+  text-align: right;
+}
+
+/* ---------- main image-like row ---------- */
+:root {
+  --station-min: 175px;
+  --charges-w: 175px;
+  --col-no: 58px;
+  --col-desc: minmax(220px, 1fr);
+  --col-basis: 118px;
+  --col-rate: 82px;
+  --col-charges: 0.75fr;
+  --col-weight: 90px;
+  --mid-height: auto;
+  --col-btn: 56px;
+}
+
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.bilty-image-row {
+  display: grid;
+  grid-template-columns: 1fr .25fr;
+  border-top: 1px solid #000;
+  margin-top: 5px;
+  font-size: 15px;
+  ;
+  align-items: stretch;
+  height: auto;
+
+}
+
+
+/* ---------- middle area ---------- */
+.middle-area {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.heads {
+  display: grid;
+  grid-template-columns: var(--col-no) var(--col-desc) var(--col-basis) var(--col-rate) var(--col-weight) var(--col-btn);
+  height: 27px;
+  align-items: stretch;
+}
+
+.heads .head {
+  border: 1px solid #000;
+  padding: 4px 3px;
+  text-align: center;
+  font-weight: 600;
+  min-width: 0;
+}
+
+.desc-area {
+  border-top: 1px solid #000;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.desc-content {
+  padding: 4px 0 0;
+  min-height: 230px;
+  flex: 1;
+}
+
+
+.btn {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-row {
+  display: grid;
+  grid-template-columns: var(--col-no) var(--col-desc) var(--col-basis) var(--col-rate) var(--col-weight) var(--col-btn);
+  text-align: left;
+  align-items: center;
+  min-height: 36px;
+}
+
+.item-row input[type="text"],
+.item-row select {
+  width: 100%;
+  min-width: 0;
+  height: 32px;
+  font-size: 14px;
+}
+
+.hidden {
+  display: none;
+}
+
+.item-row>div {
+  padding: 1px 2px;
+  font-size: 15px;
+  text-align: left;
+  min-width: 0;
+}
+
+.item-row .item-desc {
+  text-align: left;
+}
+
+.item-row .btn button,
+.item-row .add-item-btn,
+.item-row .remove-item-btn {
+  width: 100%;
+  min-width: 0;
+  height: 32px;
+  padding: 0;
+  line-height: 1;
+  text-align: center;
+  cursor: pointer;
+}
+
+.desc-footer {
+  display: grid;
+  grid-template-columns: var(--col-no) var(--col-desc) var(--col-basis) var(--col-rate) var(--col-weight) var(--col-btn);
+  border-top: 2px solid #000;
+}
+
+.desc-footer > div:nth-child(2) {
+  grid-column: 2 / 5;
+}
+
+.desc-footer > div:nth-child(3) {
+  grid-column: 5 / 7;
+}
+
+.desc-footer .item-desc {
+  font-size: 14px;
+  text-align: left;
+}
+
+.desc-footer>div {
+  padding: 4px 6px;
+  font-weight: 700;
+  text-align: center;
+  font-size: 15px;
+  ;
+  border-bottom: #000 2px solid;
+}
+
+.desc-footer .label {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.bill-footer,
+.mark-footer,
+.note-footer {
+  text-align: left;
+  align-items: center;
+  padding: 4px 5px;
+}
+
+.bill-footer,
+.mark-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+
+.bill-footer p,
+.mark-footer p {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.bill-footer strong,
+.mark-footer strong {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.bill-footer input[type="text"],
+.mark-footer input[type="text"],
+.mark-footer select {
+  width: 100%;
+  min-width: 0;
+  height: 28px;
+  font-size: 15px;
+  padding: 3px 5px;
+}
+
+.mark-footer {
+  border-bottom: 1px solid #000;
+}
+
+.mark-footer p {
+  grid-template-columns: 96px minmax(0, 1fr);
+}
+
+.note-footer {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.note-footer p {
+  font-size: 15px;
+  ;
+
+}
+
+/* ---------- charges column ---------- */
+.charges-area {
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+
+}
+
+.charges-area h3 {
+  padding: 4px 3px;
+  font-size: 15px;
+  text-align: center;
+  border-bottom: 2px solid #000;
+  height: 27px;
+}
+
+.charges-inner {
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+
+}
+
+.charges-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px;
+  border-bottom: 1px solid #000;
+}
+
+.charges-row .c-label {
+  font-weight: 700;
+  font-size: 15px;
+  ;
+}
+
+.charges-row .c-value {
+  min-width: 48px;
+  text-align: right;
+}
+
+.total-row {
+  font-weight: 900;
+}
+
+.charges-area input[type="text"] {
+  width: 80px;
+  text-align: right;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.full {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  font-size: larger;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 4px 0;
+  font-weight: 800;
+  background-color: hsla(0, 0%, 0%, 0.25);
+}
+
+input,
+select {
+  padding: 4px;
+  width: 80%;
+  background-color: rgb(167, 246, 255);
+  text-decoration-color: #000;
+  color: #000;
+  border: 2px solid #000;
+}
+
+/* Match basis dropdown with other item-row text inputs. */
+.item-row .product-rate-basis {
+  width: 100%;
+  padding: 4px;
+  background-color: rgb(167, 246, 255);
+  color: #000;
+  border: 2px solid #000;
+}
+
+.item-row .product-rate-basis:focus,
+.item-row .product-rate-basis:focus-visible {
+  background-color: rgb(255, 178, 178);
+  color: rgb(0, 0, 0);
+  outline: none;
+}
+
+/* Keep Basis dropdown option list solid (non-transparent). */
+.product-rate-basis option {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+
+.bilty-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 6px 12px;
+  background-color: hsla(0, 0%, 0%, 0.50);
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.bilty-btn .btn {
+  width: 125px;
+  cursor: pointer;
+  padding: 4px 10px;
+  background-color: #48ff00;
+  border-radius: 6px 2px;
+}
+
+.bilty-btn .btn:hover {
+  background-color: #ffffff;
+  scale: 1.1;
+}
+
+.bilty-btn .btn:focus {
+  background-color: #ff5e5e;
+  scale: 1.2;
+}
+
+.last-bilty-panel {
+  color: #000;
+  padding: 4px 10px 0;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.last-bilty-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.last-bilty-table td {
+  padding: 1px 8px 1px 0;
+  border: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+option:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  background-color: rgb(255, 178, 178);
+  color: rgb(0, 0, 0);
+  outline: none;
+}

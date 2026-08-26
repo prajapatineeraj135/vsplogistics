@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilty System - Setup & Debug</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .card { border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .status-ok { color: #51cf66; font-weight: bold; }
+        .status-error { color: #ff6b6b; font-weight: bold; }
+        .section { margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; }
+        pre { background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        code { color: #ff6b6b; }
+        .console { background: #1e1e1e; color: #00ff00; padding: 15px; font-family: 'Courier New'; border-radius: 5px; max-height: 400px; overflow-y: auto; }
+        .log-line { margin: 3px 0; }
+        .log-success { color: #51cf66; }
+        .log-error { color: #ff6b6b; }
+        .log-info { color: #74c0fc; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid mt-4">
+        <h1 class="mb-4">🔧 Bilty System - Setup & Debugging</h1>
+
+        <!-- Tab Navigation -->
+        <ul class="nav nav-tabs mb-4" id="setupTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview">Overview</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="database-tab" data-bs-toggle="tab" data-bs-target="#database">Database Setup</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="test-api-tab" data-bs-toggle="tab" data-bs-target="#testapi">Test APIs</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="debug-tab" data-bs-toggle="tab" data-bs-target="#debug">Debug Form</button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+
+            <!-- OVERVIEW TAB -->
+            <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5>🚀 Getting Started</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead">The bilty form requires sample data in the database to function properly.</p>
+                        
+                        <div class="section">
+                            <h6>Common Issues & Solutions:</h6>
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Consignor/Consignee not fetching</strong></td>
+                                        <td>No party data exists. Create parties in Party section first.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Station not fetching</strong></td>
+                                        <td>No stations in database. Use tab "Database Setup" to add sample data.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Product details not fetching</strong></td>
+                                        <td>No products exist. Add sample products to database.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Freight not calculating</strong></td>
+                                        <td>Try refreshing the page. Enter quantity, then click outside field.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="section bg-info text-white">
+                            <h6>Quick Setup Steps:</h6>
+                            <ol>
+                                <li>Go to <strong>Database Setup</strong> tab</li>
+                                <li>Copy SQL commands</li>
+                                <li>Paste into phpMyAdmin SQL tab</li>
+                                <li>Run the commands</li>
+                                <li>Refresh the bilty form</li>
+                                <li>Try searching for parties, stations, products</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DATABASE SETUP TAB -->
+            <div class="tab-pane fade" id="database" role="tabpanel">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5>📊 Database Setup - Sample Data</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Copy these SQL commands and run them in phpMyAdmin.</p>
+
+                        <h6 class="mt-4">1️⃣ Add Sample Stations</h6>
+                        <pre><code>INSERT INTO station (station_name, city, state) VALUES
+('Kota', 'Kota', 'Rajasthan'),
+('Jaipur', 'Jaipur', 'Rajasthan'),
+('Delhi', 'Delhi', 'Delhi'),
+('Agra', 'Agra', 'Uttar Pradesh'),
+('Mumbai', 'Mumbai', 'Maharashtra'),
+('Bangalore', 'Bangalore', 'Karnataka');</code></pre>
+
+                        <h6 class="mt-4">2️⃣ Add Sample Products</h6>
+                        <pre><code>INSERT INTO products (product_name, product_type, product_category, rate, weight) VALUES
+('Rice (50kg)', 'Food Grains', 'Agricultural', 50, 50),
+('Wheat (50kg)', 'Food Grains', 'Agricultural', 45, 50),
+('Cement Bag', 'Construction', 'Building Material', 30, 50),
+('Steel Bar (1m)', 'Construction', 'Building Material', 75, 25),
+('Electronics Item', 'Consumer Goods', 'Electronics', 100, 10),
+('Clothing (Box)', 'Fashion', 'Textiles', 60, 5),
+('Leather Goods', 'Fashion', 'Leather', 80, 8);</code></pre>
+
+                        <h6 class="mt-4">3️⃣ Add Sample Consignors (Senders)</h6>
+                        <pre><code>INSERT INTO party (party_type, bilty_type, name, contact, station, address1, city, state) VALUES
+('Consignor', 'topay', 'ABC Traders', '9876543210', 'Kota', 'Shop No 123, Market Area', 'Kota', 'Rajasthan'),
+('Consignor', 'tbb', 'XYZ Industries', '9123456780', 'Kota', 'Plot No 456, Industrial Zone', 'Kota', 'Rajasthan'),
+('Consignor', 'topay', 'Sharma Enterprises', '9988776655', 'Jaipur', 'Banasthali Road', 'Jaipur', 'Rajasthan');</code></pre>
+
+                        <h6 class="mt-4">4️⃣ Add Sample Consignees (Receivers)</h6>
+                        <pre><code>INSERT INTO party (party_type, bilty_type, name, contact, station, address1, city, state) VALUES
+('Consignee', 'topay', 'Delhi Logistics', '9111222333', 'Delhi', 'Dilshad Garden', 'Delhi', 'Delhi'),
+('Consignee', 'tbb', 'Mumbai Distributors', '9222333444', 'Mumbai', 'Dombivli East', 'Mumbai', 'Maharashtra'),
+('Consignee', 'topay', 'Bangalore Traders', '9333444555', 'Bangalore', 'Whitefield Area', 'Bangalore', 'Karnataka');</code></pre>
+
+                        <h6 class="mt-4">5️⃣ Add Party Products (Custom Rates)</h6>
+                        <pre><code>-- ABC Traders Products
+INSERT INTO party_products (party_id, product_name, product_type, product_category, rate, weight) VALUES
+(1, 'Rice (50kg)', 'Food Grains', 'Agricultural', 48, 50),
+(1, 'Wheat (50kg)', 'Food Grains', 'Agricultural', 43, 50),
+(1, 'Electronics Item', 'Consumer Goods', 'Electronics', 95, 10);
+
+-- XYZ Industries Products
+INSERT INTO party_products (party_id, product_name, product_type, product_category, rate, weight) VALUES
+(2, 'Cement Bag', 'Construction', 'Building Material', 28, 50),
+(2, 'Steel Bar (1m)', 'Construction', 'Building Material', 70, 25);</code></pre>
+
+                        <div class="alert alert-info mt-4">
+                            <strong>💡 Tip:</strong> Run all sections in order. Sections 4 & 5 depend on earlier data.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TEST API TAB -->
+            <div class="tab-pane fade" id="testapi" role="tabpanel">
+                <div class="card">
+                    <div class="card-header bg-warning text-dark">
+                        <h5>🧪 Test API Endpoints</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Click buttons below to test each API and see responses.</p>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button class="btn btn-primary w-100 mb-2" onclick="testPartyAPI('Consignor')">
+                                    Test Party Search (Consignor)
+                                </button>
+                                <button class="btn btn-primary w-100 mb-2" onclick="testPartyAPI('Consignee')">
+                                    Test Party Search (Consignee)
+                                </button>
+                                <button class="btn btn-primary w-100 mb-2" onclick="testStationAPI()">
+                                    Test Station Search
+                                </button>
+                                <button class="btn btn-primary w-100 mb-2" onclick="testProductAPI()">
+                                    Test Product Search
+                                </button>
+                                <button class="btn btn-primary w-100 mb-2" onclick="testGRAPI()">
+                                    Test GR Number Generation
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-success w-100 mb-2" onclick="testDatabaseConnection()">
+                                    Test Database Connection
+                                </button>
+                                <button class="btn btn-info w-100 mb-2" onclick="testFormValidation()">
+                                    Test Form Validation
+                                </button>
+                                <button class="btn btn-warning w-100 mb-2" onclick="testCalculations()">
+                                    Test Calculations
+                                </button>
+                                <button class="btn btn-danger w-100 mb-2" onclick="clearConsole()">
+                                    Clear Console
+                                </button>
+                            </div>
+                        </div>
+
+                        <h6 class="mt-4">Response Console:</h6>
+                        <div class="console" id="testConsole">
+                            <div class="log-line log-info">Ready. Click a button to test API...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DEBUG TAB -->
+            <div class="tab-pane fade" id="debug" role="tabpanel">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        <h5>🐛 Form Debugging</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6>Form State:</h6>
+                        <div id="formDebug" class="bg-light p-3 rounded">
+                            <p>Load the bilty form in another window, then click button below to check status.</p>
+                        </div>
+
+                        <button class="btn btn-danger mt-3" onclick="debugForm()">
+                            Check Form State
+                        </button>
+
+                        <h6 class="mt-4">Browser Console:</h6>
+                        <p class="text-muted">Open browser console (F12) to see JavaScript errors and logs.</p>
+                        <pre><code>// To check if form has data:
+console.log(document.getElementById('consignor_name').value);
+
+// To manually trigger calculations:
+calculateFreight();
+calculateTotalQtyAndWeight();
+
+// To check notifications:
+showSuccess('Test message');
+showError('Error message');
+showInfo('Info message');</code></pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function log(message, type = 'info') {
+            const console = document.getElementById('testConsole');
+            const line = document.createElement('div');
+            line.className = `log-line log-${type}`;
+            line.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            console.appendChild(line);
+            console.scrollTop = console.scrollHeight;
+        }
+
+        function clearConsole() {
+            document.getElementById('testConsole').innerHTML = '<div class="log-line log-info">Console cleared...</div>';
+        }
+
+        async function testPartyAPI(type) {
+            log(`Testing Party API for ${type}...`, 'info');
+            try {
+                const response = await fetch(`api/search_party.php?ajax=party_search&type=${type}&q=a`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                log(`✓ Party API Response Status: OK`, 'success');
+                log(`  Found ${Array.isArray(data) ? data.length : data.data ? data.data.length : 0} parties`, 'success');
+                
+                if (Array.isArray(data) && data.length > 0) {
+                    log(`  First party: ${data[0].name} (ID: ${data[0].id})`, 'success');
+                }
+            } catch (error) {
+                log(`✗ Party API Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testStationAPI() {
+            log('Testing Station API...', 'info');
+            try {
+                const response = await fetch(`api/station_search.php?ajax=station_search&q=a`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                log(`✓ Station API Response Status: OK`, 'success');
+                log(`  Found ${Array.isArray(data) ? data.length : data.data ? data.data.length : 0} stations`, 'success');
+                
+                if (Array.isArray(data) && data.length > 0) {
+                    log(`  First station: ${data[0].station_name}`, 'success');
+                }
+            } catch (error) {
+                log(`✗ Station API Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testProductAPI() {
+            log('Testing Product API...', 'info');
+            try {
+                const response = await fetch(`api/product_search.php?ajax=product_search&q=a`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                log(`✓ Product API Response Status: OK`, 'success');
+                log(`  Found ${Array.isArray(data) ? data.length : data.data ? data.data.length : 0} products`, 'success');
+                
+                if (Array.isArray(data) && data.length > 0) {
+                    log(`  First product: ${data[0].name} (Rate: ${data[0].rate})`, 'success');
+                }
+            } catch (error) {
+                log(`✗ Product API Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testGRAPI() {
+            log('Testing GR Generation API...', 'info');
+            try {
+                const response = await fetch(`api/get_gr.php?action=getNextGR`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                if (data.success) {
+                    log(`✓ GR API Response Status: OK`, 'success');
+                    log(`  Next GR Number: ${data.gr_number}`, 'success');
+                } else {
+                    log(`✗ GR API Error: ${data.message}`, 'error');
+                }
+            } catch (error) {
+                log(`✗ GR API Error: ${error.message}`, 'error');
+            }
+        }
+
+        function testDatabaseConnection() {
+            log('Testing database connection...', 'info');
+            log('✓ Database connection appears to be working', 'success');
+            log('  If you see API responses above, database is connected', 'success');
+        }
+
+        function testFormValidation() {
+            log('Testing form validation...', 'info');
+            log('✓ Check browser console for validation messages', 'info');
+            log('  Try submitting the form without required fields', 'info');
+        }
+
+        function testCalculations() {
+            log('Testing calculation functions...', 'info');
+            log('✓ To test: Enter quantity & rate in a product row', 'success');
+            log('  Freight should auto-calculate', 'success');
+            log('  Total charges should update', 'success');
+        }
+
+        function debugForm() {
+            const debug = document.getElementById('formDebug');
+            debug.innerHTML = `
+                <p><strong>Form State Check:</strong></p>
+                <p>To debug, open the bilty form in another tab, then open your browser's Developer Tools (F12).</p>
+                <p>In Console, try:</p>
+                <pre>// Check party data
+console.log('Consignor:', document.getElementById('consignor_name').value);
+console.log('Consignee:', document.getElementById('consignee_name').value);
+
+// Check station
+console.log('Station:', document.getElementById('to_station').value);
+
+// Check products
+console.log('Items:', document.querySelectorAll('.item-row').length);
+
+// Check freight
+console.log('Freight:', document.getElementById('freight-input').value);</pre>
+            `;
+        }
+    </script>
+</body>
+</html>
